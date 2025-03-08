@@ -1,4 +1,9 @@
+"""does behind the scenes calculations for preparing
+between diffrent scripts, handles hardcode requests and encodes binary"""
+
+
 def binary_encode(n, bit_length=None):
+    """Converts an integer to a binary list of booleans"""
     binary_str = bin(n)[2:]
     binary_list = [bool(int(bit)) for bit in binary_str]
 
@@ -10,9 +15,11 @@ def binary_encode(n, bit_length=None):
     return binary_list
 
 
-def shape_movement_dir(tuple, b):
-    coord_1 = tuple[0]
-    coord_2 = tuple[1]
+def shape_movement_dir(val, b):
+    """returns a tuple representing a coordinate
+    of a space in a set direction from a given coordinate"""
+    coord_1 = val[0]
+    coord_2 = val[1]
     return_values = {
         0: (coord_1 + 1, coord_2),
         1: (coord_1 - 1, coord_2),
@@ -23,4 +30,5 @@ def shape_movement_dir(tuple, b):
 
 
 def sim_setup():
+    """fill a give shape with the binary values to be used in the simulation"""
     return True
