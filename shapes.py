@@ -2,20 +2,41 @@ import ast
 import encoder
 import sql
 
+start_n = 0
+set_n = False
+iteration_n = 0
+
 
 def generate_shapes(n):
+    global start_n
+    global set_n
+    global iteration_n
     # dict = {1: 1, 2: 1, 3: 2, 4: 5, 5: 12, 6: 35, 7: 108, 8: 369, 9: 1285, 10: 4655}
     final_x = 0
+    print("log")
+    curr_n = 0
+    iteration_n = n
+    if set_n == False:
+        start_n = n
+        set_n = True
 
-    def check_x(n):
-        curr_n = n
-        splice_string = str(n) + "|"
+    def check_x(z):
+        global curr_n
+        global iteration_n
+        print(z)
+        curr_n = z
+        print(z)
+        splice_string = str(z) + "|"
+        print(splice_string)
         with open("shapearrs.txt", "r") as shapearrs:
             overview = shapearrs.read()
             if splice_string in overview:
+                print("logt")
                 return True
             else:
+                print("logf")
                 curr_n -= 1
+                iteration_n -= 1
                 check_x(curr_n)
                 return curr_n
 
@@ -28,6 +49,7 @@ def generate_shapes(n):
             for i, line in enumerate(lines):
                 if splice_string in line and f1 == 0:
                     cutstart = i + 1
+                    print("iwashere")
                     f1 = 1
                 elif splice_string in line and f1 == 1:
                     cutend = i
@@ -74,14 +96,22 @@ def generate_shapes(n):
         sql.shape_tier(y)
 
     final_x = check_x(n)
+    iteration_n += 1
     if final_x == True:
-        final_x = n
+        final_x = iteration_n
+        print(start_n)
+        print("logx")
         print(final_x)
+        print(n)
+        print(iteration_n)
         rescomp = get_prev_shapes(final_x - 1)
         print(rescomp)
         generate(final_x, rescomp)
+        if iteration_n < start_n:
+            generate_shapes(iteration_n + 1)
     else:
+        print(final_x)
         generate_shapes(final_x)
 
 
-generate_shapes(2)
+generate_shapes(3)
