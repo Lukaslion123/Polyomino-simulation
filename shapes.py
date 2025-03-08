@@ -87,7 +87,7 @@ def generate_shapes(n):
                     sql.shape_add(special)
         sql.shape_tier(y)
 
-    final_x = check_x(n)
+    final_x = check_x(n - 1)
     if final_x == True:
         if iteration_n > start_n:
             iteration_n = start_n
@@ -105,4 +105,4 @@ def generate_shapes(n):
         generate_shapes(final_x)
 
 
-generate_shapes(2)
+generate_shapes(3)
