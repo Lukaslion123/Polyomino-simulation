@@ -86,7 +86,10 @@ def generate_shapes(n):
                 print(special)
                 print(coord)
                 special.append(tuple(coord))
-                sql.shape_add(special)
+                final_form = encoder.shape_overallcoords(special)
+                linelist = sql.shape_linelist()
+                if str(final_form) + "\n" not in linelist:
+                    sql.shape_add(final_form)
         sql.shape_tier(y)
 
     final_x = check_x(n - 1)
@@ -105,4 +108,4 @@ def generate_shapes(n):
         generate_shapes(final_x)
 
 
-generate_shapes(2)
+generate_shapes(3)

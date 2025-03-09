@@ -29,6 +29,37 @@ def shape_movement_dir(val, b):
     return return_values[b]
 
 
+def shape_overallcoords(shape):
+    """rewrites the coordinates of a shape to start in the top left corner"""
+    list_x = []
+    list_y = []
+    for coord in shape:
+        list_x.append(coord[0])
+        list_y.append(coord[1])
+    min_x = min(list_x)
+    min_xc = min_x
+    max_x = max(list_x)
+    min_y = min(list_y)
+    min_yc = min_y
+    max_y = max(list_y)
+    dict_x = {}
+    for d in range(max_x - min_x + 1):
+        dict_x[min_xc] = d
+        min_xc += 1
+    dict_y = {}
+    for d in range(max_y - min_y + 1):
+        dict_y[min_yc] = d
+        min_yc += 1
+    print(dict_x)
+    print(dict_y)
+    unordered = []
+    for coord in shape:
+        unordered.append((dict_x[coord[0]], dict_y[coord[1]]))
+        new_shape = sorted(unordered, key=lambda x: (x[0], x[1]))
+    print(new_shape)
+    return new_shape
+
+
 def sim_setup():
     """fill a give shape with the binary values to be used in the simulation"""
     return True
