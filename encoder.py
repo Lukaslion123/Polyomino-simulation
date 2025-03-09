@@ -50,14 +50,29 @@ def shape_overallcoords(shape):
     for d in range(max_y - min_y + 1):
         dict_y[min_yc] = d
         min_yc += 1
-    print(dict_x)
-    print(dict_y)
     unordered = []
     for coord in shape:
         unordered.append((dict_x[coord[0]], dict_y[coord[1]]))
         new_shape = sorted(unordered, key=lambda x: (x[0], x[1]))
-    print(new_shape)
     return new_shape
+
+
+def shape_rotate(shape):
+    """rotates a shape 90 degrees clockwise"""
+    new_shape = []
+    for coord in shape:
+        new_coord = (coord[1], -coord[0])
+        new_shape.append(new_coord)
+    return shape_overallcoords(new_shape)
+
+
+def shape_mirror(shape):
+    """mirrors a shape along the x-axis"""
+    new_shape = []
+    for coord in shape:
+        new_coord = (-coord[0], coord[1])
+        new_shape.append(new_coord)
+    return shape_overallcoords(new_shape)
 
 
 def sim_setup():

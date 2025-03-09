@@ -32,6 +32,7 @@ def generate_shapes(n):
         """calculate the value of x for the get_prev_shapes
         function based on the current value of iteration_n"""
         global curr_n
+        global iteration_n
         curr_n = z
         splice_string = str(z) + "|"
         overview = sql.shape_stringify()
@@ -77,19 +78,26 @@ def generate_shapes(n):
                         free_arr.append(coords)
             return free_arr
 
+        def filter_special(spec):
+            """filters n-ominoes to remove duplicates and leave only free polyominoes"""
+            final_form = encoder.shape_overallcoords(spec)
+            linelist = sql.shape_linelist()
+            free_omino = final_form
+            for _ in range(2):
+                for _ in range(4):
+                    if str(free_omino) + "\n" in linelist:
+                        return
+                    free_omino = encoder.shape_rotate(free_omino)
+                free_omino = encoder.shape_mirror(free_omino)
+            sql.shape_add(free_omino)
+
         for _, curr_overlay_shape in enumerate(res):
             curr_overlay_shape = curr_overlay_shape.copy()
             free = check_directions(curr_overlay_shape)
-            print(free)
             for _, coord in enumerate(free):
                 special = curr_overlay_shape.copy()
-                print(special)
-                print(coord)
                 special.append(tuple(coord))
-                final_form = encoder.shape_overallcoords(special)
-                linelist = sql.shape_linelist()
-                if str(final_form) + "\n" not in linelist:
-                    sql.shape_add(final_form)
+                filter_special(special)
         sql.shape_tier(y)
 
     final_x = check_x(n - 1)
@@ -108,4 +116,4 @@ def generate_shapes(n):
         generate_shapes(final_x)
 
 
-generate_shapes(3)
+generate_shapes(4)
