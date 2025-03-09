@@ -105,4 +105,4 @@ def generate_shapes(n):
         generate_shapes(final_x)
 
 
-generate_shapes(2)
+generate_shapes(3)
