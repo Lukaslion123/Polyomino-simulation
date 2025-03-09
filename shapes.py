@@ -14,6 +14,11 @@ set_n = False
 iteration_n = 0
 curr_n = 0
 
+if sql.shape_stringify() == "":
+    sql.shape_tier(1)
+    sql.shape_add([(0, 0)])
+    sql.shape_tier(1)
+
 
 def generate_shapes(n):
     """handles generation and storage of n-ominoes for n and values
@@ -116,4 +121,10 @@ def generate_shapes(n):
         generate_shapes(final_x)
 
 
-generate_shapes(4)
+input_bool = input("Would you like to generate shapes for n-ominoes? (y/n): ")
+if input_bool == "y":
+    n_input = int(input("Enter the value of n for n-ominoes: "))
+    generate_shapes(n_input)
+    print("Shapes generated successfully!")
+else:
+    print("Shapes not generated.")
