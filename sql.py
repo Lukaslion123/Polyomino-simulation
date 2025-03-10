@@ -7,10 +7,12 @@ def shape_tier(n):
         shapearrs.write(str(n) + "|\n")
 
 
-def shape_add(shape_arr):
+def shape_add(shape_arr, shape_id):
     """adds an array containg a shape coord encode into shapearrs.txt"""
+    if shape_arr is False:
+        return
     with open("shapearrs.txt", "a", encoding="UTF-8") as shapearrs:
-        shapearrs.write(str(shape_arr) + "\n")
+        shapearrs.write(str(shape_arr) + str(shape_id) + "\n")
 
 
 def shape_stringify():
