@@ -44,18 +44,8 @@ def generate_shapes(n):
 
     def get_prev_shapes(x):
         """gets the shapes of n-1 from the database for use in generating the shapes of n"""
-        splice_string = str(x) + "|"
         prev_shapes = []
-        linelist = sql.shape_linelist()
-        f1 = 0
-        for i, line in enumerate(linelist):
-            if splice_string in line and f1 == 0:
-                tier_start = i + 1
-                f1 = 1
-            elif splice_string in line and f1 == 1:
-                tier_end = i
-                break
-        extracted_content = linelist[tier_start:tier_end]
+        extracted_content = sql.shape_search_tier(x)
         for line in extracted_content:
             shape_line = line.strip()
             shape_line = shape_line.split("]")[0] + "]"
@@ -67,17 +57,6 @@ def generate_shapes(n):
         """specifically handles the generation part of the script"""
         sql.shape_tier(y)
         shape_id = 0
-
-        def check_directions(overlay_shape):
-            """checks for which squares are free around the current base
-            shape of n-1 and returns them for further use"""
-            free_squares = []
-            for _, shape in enumerate(overlay_shape):
-                for b in range(4):
-                    coords = encoder.shape_movement_dir(shape, b)
-                    if not coords in overlay_shape:
-                        free_squares.append(coords)
-            return free_squares
 
         def filter_shapes(shape):
             """filters n-ominoes to remove duplicates and leave only free polyominoes"""
@@ -96,19 +75,21 @@ def generate_shapes(n):
                         return False
                     candidate = encoder.shape_rotate(candidate)
                 candidate = encoder.shape_mirror(candidate)
-            # shape_id += 1
-            # sql.shape_add(candidate, shape_id)
             print("valid")
             shape_id += 1
             return candidate
 
         for _, curr_overlay_shape in enumerate(prev_shapes):
             curr_overlay_shape = curr_overlay_shape.copy()
-            free_spaces = check_directions(curr_overlay_shape)
+            free_spaces = []
+            for _, coord in enumerate(curr_overlay_shape):
+                buffer_value = encoder.shape_check_directions(curr_overlay_shape, coord)
+                for _ in range(len(buffer_value)):
+                    single_space = buffer_value.pop()
+                    free_spaces.append(single_space)
             for _, coord in enumerate(free_spaces):
                 new_shape = curr_overlay_shape.copy()
                 new_shape.append(tuple(coord))
-                # filter_shapes(new_shape)
                 final_step = filter_shapes(new_shape)
                 sql.shape_add(final_step, shape_id)
         sql.shape_tier(y)

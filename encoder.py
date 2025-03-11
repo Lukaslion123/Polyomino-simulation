@@ -12,7 +12,7 @@ def binary_encode(n, bit_length=None):
         if bit_length > current_bit_length:
             binary_list = [False] * (bit_length - current_bit_length) + binary_list
 
-    return binary_list
+    return tuple(binary_list)
 
 
 def shape_movement_dir(val, b):
@@ -75,6 +75,16 @@ def shape_mirror(shape):
     return shape_overallcoords(new_shape)
 
 
-def sim_setup():
-    """fill a give shape with the binary values to be used in the simulation"""
-    return True
+def shape_check_directions(overlay_shape, coord, reverse=False):
+    """checks for which squares are free around the current base
+    shape of n-1 and returns them for further use"""
+    squares = []
+    for b in range(4):
+        coords = shape_movement_dir(coord, b)
+        if not reverse:
+            if not coords in overlay_shape:
+                squares.append(coords)
+        else:
+            if coords in overlay_shape:
+                squares.append(coords)
+    return squares

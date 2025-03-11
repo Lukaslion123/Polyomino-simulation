@@ -1,5 +1,7 @@
 """used to store and retrieve data from txt databases for different scripts"""
 
+import ast
+
 
 def shape_tier(n):
     """adds an n-tier symbol into shapearrs.txt"""
@@ -25,3 +27,30 @@ def shape_linelist():
     """returns the contents of shapearrs.txt as a list of lines"""
     with open("shapearrs.txt", "r", encoding="UTF-8") as shapearrs:
         return shapearrs.readlines()
+
+
+def search_shape(n, shape_id):
+    """searches for a shape in shapearrs.txt and returns the shape array"""
+    spliced = shape_search_tier(n)
+    for line in spliced:
+        id_string = line.find("]")
+        id_string = line[id_string + 1 :].strip()
+        if str(shape_id) == id_string:
+            line = line.strip()
+            line = line.split("]")[0] + "]"
+            return ast.literal_eval(line)
+
+
+def shape_search_tier(n):
+    """searches for all shapes in a tier of n"""
+    splice_string = str(n) + "|"
+    linelist = shape_linelist()
+    f1 = 0
+    for i, line in enumerate(linelist):
+        if splice_string in line and f1 == 0:
+            tier_start = i + 1
+            f1 = 1
+        elif splice_string in line and f1 == 1:
+            tier_end = i
+            break
+    return linelist[tier_start:tier_end]
