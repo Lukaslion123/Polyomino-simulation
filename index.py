@@ -11,6 +11,8 @@ def main():
     if side_prompt == "c":
         with open("shapearrs.txt", "w", encoding="UTF-8") as shapearrs:
             shapearrs.write("")
+        with open("outcomes.txt", "w", encoding="UTF-8") as outcomes:
+            outcomes.write("")
         sql.shape_tier(1)
         sql.shape_add([(0, 0)], 0)
         sql.shape_tier(1)
@@ -28,7 +30,7 @@ def main():
 def bypass(side_p, inp_n, inst, shpe_id=None):
     """quickly repeat instruction for testing"""
     if side_p == "c":
-        with open("shapearrs.txt", "w", encoding="UTF-8") as shapearr:
+        with open("outcomes.txt", "w", encoding="UTF-8") as shapearr:
             shapearr.write("")
         sql.shape_tier(1)
         sql.shape_add([(0, 0)], 0)
@@ -41,5 +43,5 @@ def bypass(side_p, inp_n, inst, shpe_id=None):
         print("Invalid input")
 
 
-main()
-# bypass("n", 3, "sim", shpe_id=2)
+# main()
+bypass("c", 3, "sim", shpe_id=2)

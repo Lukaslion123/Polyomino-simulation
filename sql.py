@@ -54,3 +54,23 @@ def shape_search_tier(n):
             tier_end = i
             break
     return linelist[tier_start:tier_end]
+
+
+def sim_init_section(tier, shape_id):
+    """initializes a shape section in outcomes.txt"""
+    with open("outcomes.txt", "a", encoding="UTF-8") as sim:
+        sim.write(str(tier) + "-" + str(shape_id) + "\n")
+
+
+def sim_write_result(arr1, arr2):
+    """writes a simulation result to outcomes.txt"""
+    with open("outcomes.txt", "a", encoding="UTF-8") as sim:
+        sim.write(str(arr1) + "\n")
+        sim.write(str(arr2) + "\n")
+
+
+def sim_init_comb_dict(dictionary, r_ange):
+    """writes a quick dictionary for the combinations"""
+    for i in range(r_ange):
+        with open("outcomes.txt", "a", encoding="UTF-8") as sim:
+            sim.write(str(i) + ": " + str(dictionary[i]) + "\n")
