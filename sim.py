@@ -51,20 +51,16 @@ def main(n, shape_id):
 
     def handle_backend(c):
         """handles the backend of the simulation"""
-        curr_c = None
+        curr_c = c
         curr_sim_arr = []
         backup_arr = []
         stat_arr = []
         curr_sim_arr.append(c)
         while curr_c not in backup_arr:
             backup_arr = curr_sim_arr.copy()
-            print(curr_sim_arr)
-            print(curr_c)
-            combination = dict_combinations[c]
+            combination = dict_combinations[curr_c]
             transformed_combination = night_cycle(combination)
-            print(dict_comb_id)
             curr_c = dict_comb_id[transformed_combination]
-            print(curr_c)
             curr_sim_arr.append(curr_c)
         index = curr_sim_arr.index(curr_c)
         cyclicity_result = len(set(curr_sim_arr[index + 1 :]))

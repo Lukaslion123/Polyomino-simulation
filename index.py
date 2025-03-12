@@ -32,9 +32,9 @@ def bypass(side_p, inp_n, inst, shpe_id=None):
     if side_p == "c":
         with open("outcomes.txt", "w", encoding="UTF-8") as shapearr:
             shapearr.write("")
-        sql.shape_tier(1)
-        sql.shape_add([(0, 0)], 0)
-        sql.shape_tier(1)
+        # sql.shape_tier(1)
+        # sql.shape_add([(0, 0)], 0)
+        # sql.shape_tier(1)
     if inst == "sim":
         sim.main(inp_n, shpe_id)
     elif inst == "shapes":
@@ -44,4 +44,5 @@ def bypass(side_p, inp_n, inst, shpe_id=None):
 
 
 # main()
-bypass("c", 3, "sim", shpe_id=2)
+for i in range(35):
+    bypass("c", 6, "sim", shpe_id=i + 1)
